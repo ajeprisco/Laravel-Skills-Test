@@ -9,7 +9,7 @@
 <body>
     <section id="form">
         <h1>Add Product</h1>
-        <form class="productForm">
+        <form id="productForm">
             <label for="product-name">Product:</label>
             <input type="text" placeholder="Eg. Computer" id="product-name" required>
             <label for="quantity">Quantity:</label>
@@ -31,4 +31,42 @@
         </table>
     </section>
 </body>
+<script>
+    const productForm = document.getElementById('productForm');
+
+    productForm.addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const data ={
+            product: document.getElementById('product-name').value,
+            quantity: Number(document.getElementById('quantity').value),
+            price: Number(document.getElementById('price').value),
+        }
+
+        console.log(data);
+        fetch('/insertProduct',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'Accept':'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+
+        .then(async response => {
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    JSON.stringify(data.errors || data.message || data)
+                );
+            }
+            return data;
+        })
+
+        .then(data => {
+            productForm.reset();
+        })
+    })
+</script>
 </html>
