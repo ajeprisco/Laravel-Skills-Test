@@ -28,10 +28,38 @@
                     <th class="m-5">Price per Item</th>
                 </tr>
             </thead>
+            <tbody id="productTableBody">
+
+            </tbody>
+            <tr>Overall Total: <td id="overAllTotal">0.00</td></tr>
         </table>
     </section>
 </body>
 <script>
+    const tableBody = document.getElementById('productTableBody');
+    const overAllTotal = document.getElementById('overAllTotal');
+
+    function loadProducts(){
+        fetch('/getProducts')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.products);
+            console.log(data.overAllTotal);
+            tableBody.innerHTML = '';
+            data.products.forEach(product => {
+                const row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${product.product}</td>
+                                <td>${product.quantity}</td>
+                                <td>${Number(product.price).toFixed(2)}</td>
+                            `;
+                            tableBody.appendChild(row);
+            });
+            overAllTotal.textContent = Number(data.overAllTotal);
+        })
+    }
+    loadProducts();
+
     const productForm = document.getElementById('productForm');
 
     productForm.addEventListener('submit', function(event){
@@ -66,6 +94,7 @@
 
         .then(data => {
             productForm.reset();
+            loadProducts();
         })
     })
 </script>

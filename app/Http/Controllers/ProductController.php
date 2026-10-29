@@ -19,4 +19,19 @@ class ProductController extends Controller
             'product' => $product
         ], 201);
     }
+
+    public function getProducts(){
+        $products = Product::All();
+        $total=0;
+        foreach($products as $product){
+            $totalPrice =$product->price * $product->quantity;
+            $total = $total + $totalPrice;
+        }
+        $overAllTotal = $total;
+
+        return response()->json([
+            'products' => $products,
+            'overAllTotal' => $overAllTotal
+        ]);
+    }
 }
