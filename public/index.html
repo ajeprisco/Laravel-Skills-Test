@@ -4,8 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-    
+    <section id="form">
+        <h1>Add Product</h1>
+        <form class="productForm">
+            <label for="product-name">Product:</label>
+            <input type="text" placeholder="Eg. Computer" id="product-name" required>
+            <label for="quantity">Quantity:</label>
+            <input type="number" placeholder="Eg. 2" id="quantity" required> 
+            <label for="price">Price:</label>
+            <input type="number" placeholder="Eg. 12.5" id="price" required>
+            <button class="btn btn-primary" type="submit">submit</button>
+        </form>
+    </section>
+    <section id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th class="m-5">Product Name</th>
+                    <th class="m-5">Quantity</th>
+                    <th class="m-5">Price per Item</th>
+                </tr>
+            </thead>
+        </table>
+    </section>
 </body>
 </html>
